@@ -189,7 +189,7 @@ VITE v5 ready in 300 ms
 
 ---
 
-# Developer
+# Developers
 
 - Shreya Robin
 - Shimona Sinha
