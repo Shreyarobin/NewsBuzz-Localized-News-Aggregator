@@ -1,0 +1,208 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+      - feature/**
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+
+  # ============================================================
+  # 1️⃣ BUILD STAGE
+  # ============================================================
+  build:
+    name: 🏗️ Build Stage
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Backend
+      - name: Install backend dependencies
+        working-directory: src/backend
+        run: npm install
+
+      # Frontend
+      - name: Install frontend dependencies
+        working-directory: src/frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: src/frontend
+        run: npm run build
+
+  # ============================================================
+  # 2️⃣ LINT STAGE
+  # ============================================================
+  lint:
+    name: 🔍 Lint Stage
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # ---------- BACKEND LINT ----------
+      - name: Install backend dependencies
+        working-directory: src/backend
+        run: npm install
+
+      - name: Backend ESLint JSON
+        working-directory: src/backend
+        run: npx eslint . -f json -o eslint-report.json || true
+
+      - name: Upload Backend Lint Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-lint
+          path: src/backend/eslint-report.json
+
+      - name: Compute Backend Lint Score
+        run: node src/backend/scripts/computeLintScore.cjs src/backend/eslint-report.json
+
+      # ---------- FRONTEND LINT ----------
+      - name: Install frontend dependencies
+        working-directory: src/frontend
+        run: npm install
+
+      - name: Frontend ESLint JSON
+        working-directory: src/frontend
+        run: npx eslint src -f json -o eslint-report.json || true
+
+      - name: Upload Frontend Lint Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-lint
+          path: src/frontend/eslint-report.json
+
+      - name: Compute Frontend Lint Score
+        run: node src/frontend/src/scripts/computeLintScore.cjs src/frontend/eslint-report.json
+
+  # ============================================================
+  # 3️⃣ SECURITY SCAN (UPDATED)
+  # ============================================================
+  security:
+    name: 🛡 Security Scan
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # ---------- BACKEND SECURITY REPORT ----------
+      - name: Install backend dependencies
+        working-directory: src/backend
+        run: npm install
+
+      - name: Backend Security Audit (JSON)
+        working-directory: src/backend
+        run: npm audit --json > backend-audit.json || true
+
+      # ---------- FRONTEND SECURITY REPORT ----------
+      - name: Install frontend dependencies
+        working-directory: src/frontend
+        run: npm install
+
+      - name: Frontend Security Audit (JSON)
+        working-directory: src/frontend
+        run: npm audit --json > frontend-audit.json || true
+
+      # ---------- UPLOAD COMBINED SECURITY REPORT ----------
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-report
+          path: |
+            src/backend/backend-audit.json
+            src/frontend/frontend-audit.json
+
+  # ============================================================
+  # 4️⃣ TEST + COVERAGE
+  # ============================================================
+  test:
+    name: 🧪 Test & Coverage
+    runs-on: ubuntu-latest
+    needs: security
+
+    env:
+      NODE_ENV: test
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # ---------- BACKEND TESTS ----------
+      - name: Install backend dependencies
+        working-directory: src/backend
+        run: npm install
+
+      - name: Backend Tests + Coverage
+        working-directory: src/backend
+        run: npm test -- --coverage --coverageReporters="json-summary"
+
+      - name: Upload Backend Coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-coverage
+          path: src/backend/coverage
+
+      - name: Check Backend Coverage Threshold
+        working-directory: src/backend
+        run: node scripts/checkCoverage.cjs
+
+      # ---------- FRONTEND TESTS ----------
+      - name: Install frontend dependencies
+        working-directory: src/frontend
+        run: npm install
+
+      - name: Frontend Tests + Coverage
+        working-directory: src/frontend
+        run: npm test -- --coverage --coverageReporters="json-summary"
+
+      - name: Upload Frontend Coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frontend-coverage
+          path: src/frontend/coverage
+
+      - name: Check Frontend Coverage Threshold
+        working-directory: src/frontend
+        run: node src/scripts/checkCoverage.cjs
+
+  # ============================================================
+  # 5️⃣ DEPLOY STAGE
+  # ============================================================
+  deploy:
+    name: 🚀 Deploy Stage
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy Backend
+        run: echo "Backend deployed."
+
+      - name: Deploy Frontend
+        run: echo "Frontend deployed."

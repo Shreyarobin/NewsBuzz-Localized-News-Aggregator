@@ -1,0 +1,26 @@
+# Node modules
+node_modules/
+
+# Python virtual environments
+.venv/
+Localized_News_Aggregator/.venv/
+
+# Environment files
+.env
+
+# Build outputs
+dist/
+build/
+
+# System files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Jest Coverage folders
+src/backend/coverage/
+src/frontend/coverage/
+
+/src/frontend/reports/
+/src/backend/reports/
+src/frontend/eslint-report.json 
