@@ -1,143 +1,203 @@
-# Localized News Aggregator
+# NewsBuzz – Localized News Aggregator
 
-**Project ID:** P50  
-**Course:** UE23CS341A  
-**Academic Year:** 2025  
-**Semester:** 5th Sem  
-**Campus:** EC  
-**Branch:** CSE  
-**Section:** I  
-**Team:** NewsBuzz
-
-## 📋 Project Description
-
-A news dashboard fetching headlines from predefined RSS feeds, categorizing by topic, and allowing keyword search. The project uses RSS-parsing libraries, category-tagging logic, and search indexing.
-
-This repository contains the source code and documentation for the Localized News Aggregator project, developed as part of the UE23CS341A course at PES University.
-
-## 🧑‍💻 Development Team (NewsBuzz)
-
-- [@ShimonaDSinha](https://github.com/ShimonaDSinha) - Scrum Master
-- [@Shravaniii03](https://github.com/Shravaniii03) - Developer Team
-- [@PES2UG23CS560](https://github.com/PES2UG23CS560) - Developer Team
-- [@pes2ug23cs562](https://github.com/pes2ug23cs562) - Developer Team
-
-## 👨‍🏫 Teaching Assistant
-
-- [@dredblackblue](https://github.com/dredblackblue)
-- [@shreyavijay2022](https://github.com/shreyavijay2022)
-- [@Meenakshi4d5f](https://github.com/Meenakshi4d5f)
-- [@tejaswiniv27](https://github.com/tejaswiniv27)
-- [@Shriya285](https://github.com/Shriya285)
-
-## 👨‍⚖️ Faculty Supervisor
-
-- *No valid faculty GitHub username found*
-
-
-## 🚀 Getting Started
-
-### Prerequisites
-- [List your prerequisites here]
-
-### Installation
-1. Clone the repository
-   ```bash
-   git clone https://github.com/pestechnology/PESU_EC_CSE_I_P50_Localized_News_Aggregator_NewsBuzz.git
-   cd PESU_EC_CSE_I_P50_Localized_News_Aggregator_NewsBuzz
-   ```
-
-2. Install dependencies
-   - Backend (from project root):
-     ```powershell
-     cd src\backend
-     npm install
-     ```
-
-   - Frontend (from project root):
-     ```powershell
-     cd ..\frontend
-     npm install
-     ```
-
-3. Run locally (two terminals)
-   - Start backend (runs on port 4000):
-     ```powershell
-     # from project root
-     cd src\backend
-     npm run dev
-     ```
-
-   - Start frontend (Vite dev server, port 5173 by default):
-     ```powershell
-     # from project root
-     cd src\frontend
-     npm run dev
-     ```
-
-Notes:
-- The backend currently exposes a placeholder endpoint at `GET /api/news`.
-- This is a minimal skeleton to get frontend and backend running. Next steps: wire RSS parsing, category tagging, and search indexing.
-
-## 📁 Project Structure
-
-```
-PESU_EC_CSE_I_P50_Localized_News_Aggregator_NewsBuzz/
-├── src/                 # Source code
-├── docs/               # Documentation
-├── tests/              # Test files
-├── .github/            # GitHub workflows and templates
-├── README.md          # This file
-└── ...
-```
-
-## 🛠️ Development Guidelines
-
-### Branching Strategy
-- `main`: Production-ready code
-- `develop`: Development branch
-- `feature/*`: Feature branches
-- `bugfix/*`: Bug fix branches
-
-### Commit Messages
-Follow conventional commit format:
-- `feat:` New features
-- `fix:` Bug fixes
-- `docs:` Documentation changes
-- `style:` Code style changes
-- `refactor:` Code refactoring
-- `test:` Test-related changes
-
-### Code Review Process
-1. Create feature branch from `develop`
-2. Make changes and commit
-3. Create Pull Request to `develop`
-4. Request review from team members
-5. Merge after approval
-
-## 📚 Documentation
-
-- [API Documentation](docs/api.md)
-- [User Guide](docs/user-guide.md)
-- [Developer Guide](docs/developer-guide.md)
-
-## 🧪 Testing
-
-```bash
-# Run tests
-npm test
-
-# Run tests with coverage
-npm run test:coverage
-```
-
-## 📄 License
-
-This project is developed for educational purposes as part of the PES University UE23CS341A curriculum.
+NewsBuzz is a localized news aggregation platform that fetches real-time news from RSS feeds, categorizes articles by topic, and provides keyword-based search for a personalized news browsing experience.
 
 ---
 
-**Course:** UE23CS341A  
-**Institution:** PES University  
-**Academic Year:** 2025  
-**Semester:** 5th Sem
+# Features
+
+- Real-time news aggregation using RSS feeds
+- Category-based news filtering
+- Keyword search functionality
+- Localized and topic-specific news dashboard
+- Responsive frontend interface
+- REST API powered backend
+- Organized article categorization system
+- Fast and lightweight news browsing experience
+
+---
+
+# Core Functionalities
+
+## RSS Feed Aggregation
+Fetches news articles dynamically from multiple RSS sources and displays updated headlines in real time.
+
+---
+
+## News Categorization
+Automatically organizes articles into categories such as:
+- Technology
+- Sports
+- Business
+- Entertainment
+- Health
+
+---
+
+## Search Functionality
+Allows users to search articles instantly using keywords or topics.
+
+---
+
+## Responsive User Interface
+Provides a clean and responsive frontend for easy navigation and better readability.
+
+---
+
+# Tech Stack
+
+## Frontend
+- React.js
+- Vite
+- HTML
+- CSS
+- JavaScript
+
+## Backend
+- Node.js
+- Express.js
+
+## Other Tools & Libraries
+- RSS Parser
+- REST APIs
+- npm
+
+---
+
+# Project Structure
+
+```bash
+NewsBuzz/
+│
+├── src/
+│   ├── backend/
+│   │   ├── app.py
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │
+│   ├── frontend/
+│   │   ├── src/
+│   │   ├── public/
+│   │
+├── docs/
+├── scripts/
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# Installation
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/NewsBuzz.git
+cd NewsBuzz
+```
+
+---
+
+# Install Dependencies
+
+## Backend
+
+```bash
+cd src/backend
+npm install
+```
+
+---
+
+## Frontend
+
+```bash
+cd ../frontend
+npm install
+```
+
+---
+
+# How to Run the Project
+
+## Step 1 — Start Backend Server
+
+Open terminal inside backend folder:
+
+```bash
+cd src/backend
+npm run dev
+```
+
+### Example Output
+
+```bash
+Server running on port 4000
+Connected to RSS feeds
+```
+
+---
+
+## Step 2 — Start Frontend
+
+Open another terminal:
+
+```bash
+cd src/frontend
+npm run dev
+```
+
+### Example Output
+
+```bash
+VITE v5 ready in 300 ms
+
+➜ Local: http://localhost:5173/
+```
+
+---
+
+# Example Workflow
+
+1. Open the frontend in browser
+2. Browse categorized news articles
+3. Search using keywords
+4. Read real-time aggregated headlines from multiple sources
+
+---
+
+# Technologies Used
+
+| Technology | Purpose |
+|------------|----------|
+| React.js | Frontend UI |
+| Vite | Frontend Build Tool |
+| Node.js | Backend Runtime |
+| Express.js | Backend Framework |
+| RSS Parser | News Feed Aggregation |
+
+---
+
+# Future Enhancements
+
+- AI-based news recommendation
+- User authentication
+- Bookmark and save articles
+- Dark mode support
+- Multi-language news support
+- Personalized news feeds
+
+---
+
+# Developers
+
+- Shreya Robin
+- Shimona Sinha
+- Shravani Isukapalli
+- Shreya Revankar 
+
+---
+
+# License
+
+This project is developed for educational and learning purposes.
